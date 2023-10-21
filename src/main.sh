@@ -63,7 +63,7 @@ _mainpath() {
     mainfile="${pkg_path}/$(awk -F'=' '/^main/ { gsub(/ /, "") ; print $2 }' "${pkg_path}"/manifest.bashpack)"
   else
     log-warn "No manifest.bashpack found at '${pkg_path}', will use the first 'main.sh' found" >&2
-    mainfile="$(find "${pkg_path}" -type f -name main.sh | head -n1)"
+    mainfile="$(find "${pkg_path}" -type f -name main.sh | sort | head -n1)"
     log-warn "Found first main.sh to be '${mainfile}'" >&2
   fi
   log-debug "Using '${mainfile}' as mainfile" >&2
