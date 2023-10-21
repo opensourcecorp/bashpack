@@ -45,12 +45,12 @@ bashpack run '<uri_to_pkg>'
 
 This is useful in myriad ways. Say you have something like a generic database
 backup/migration executable script in your org. `bashpack` lets you share it
-across projects!
+across projects and teams!
 
 ## Making your code tree into a `bashpack` package
 
 Getting `bashpack` to recognize your code tree as a package is very simple --
-you just need a mainfest file.
+you just need a manifest file.
 
 ### Manifest file
 
@@ -77,3 +77,7 @@ x
 
 `bashpack` requires `bash` (duh), `git`, and [the `bats` testing
 framework](https://github.com/bats-core/bats-core).
+
+Common development tasks are driven by the included `Makefile`.
+
+`make test` runs tests.
