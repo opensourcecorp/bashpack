@@ -12,6 +12,6 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
     - name: Install shellcheck & bats
-      run: 'apt-get update && apt-get install -y shellcheck bats'
+      run: 'sudo apt-get update && sudo apt-get install -y shellcheck bats'
     - name: Test
       run: 'make test'
