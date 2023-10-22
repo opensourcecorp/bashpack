@@ -1,0 +1,17 @@
+name: main
+on:
+  push:
+    branches:
+    - main
+
+jobs:
+  test:
+    name: test
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Install shellcheck & bats
+      run: 'apt-get update && apt-get install -y shellcheck bats'
+    - name: Test
+      run: 'make test'
