@@ -72,15 +72,16 @@ is.
 ## Installation
 
 The easiest way to install the latest version of `bashpack` is to run the
-following two lines:
+following lines:
 
 ```bash
+rm -rf "${HOME}/.local/share/bashpack"
 git clone 'https://github.com/opensourcecorp/bashpack' "${HOME}/.local/share/bashpack"
 ln -fs "${HOME}/.local/share/bashpack/src/main.sh" "${HOME}/.local/bin/bashpack"
 ```
 
 This assumes that `${HOME}/.local/bin` is on your `$PATH`. If it is not, change
-the destination on the first line to be something that is.
+the destination on the `ln` line to be something that is.
 
 ## Developing
 

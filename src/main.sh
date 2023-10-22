@@ -19,6 +19,9 @@ source /tmp/ezlog/src/main.sh
 # _sanitize-pkg-name takes a package name (a URI or something like it) and
 # converts it into a canonical filesystem path
 _sanitize-pkg-name() {
+  if [[ -z "${1:-}" ]] ; then
+    log-fatal "Package URI not provided"
+  fi
   local pkg="${1:-}"
   pkg="${pkg/http:\/\//}" # http://
   pkg="${pkg/https:\/\//}" # https://
@@ -34,6 +37,9 @@ _sanitize-pkg-name() {
 
 # _cache fetches and caches packages
 _cache() {
+  if [[ -z "${1:-}" ]] ; then
+    log-fatal "Package URI not provided"
+  fi
   local pkg
   pkg="$(_sanitize-pkg-name "${1:-}")"
   log-debug "Processing cache check for package '${pkg}'" >&2
@@ -50,7 +56,7 @@ _cache() {
 # _mainpath retrieves the host path to the backpack package's main file
 _mainpath() {
   if [[ -z "${1:-}" ]] ; then
-    log-fatal "Package path not provided"
+    log-fatal "Package URI not provided"
   fi
   local pkg
   pkg="$(_sanitize-pkg-name "${1}")"
