@@ -16,12 +16,19 @@ mkdir -p \
   "${BASHPACK_LIB}"
 
 # Set up ezlog, which is ironic considering bashpack can be used to get ezlog itself
-[[ -d /tmp/ezlog ]] || {
-  printf 'Getting ezlog...\n'
-  git clone --depth=1 https://github.com/opensourcecorp/ezlog.git /tmp/ezlog > /dev/null 2>&1
-}
-# shellcheck disable=SC1091
-source /tmp/ezlog/src/main.sh
+ezlog_path=''
+if [[ -d "${BASHPACK_LIB}/github.com/opensourcecorp/ezlog" ]] ; then
+  printf 'Using ezlog from bashpack cache\n'
+  ezlog_path="${BASHPACK_LIB}/github.com/opensourcecorp/ezlog/src/main.sh"
+else
+  [[ -d /tmp/ezlog ]] || {
+    printf 'Getting ezlog manually...\n'
+    git clone --quiet --depth=1 https://github.com/opensourcecorp/ezlog.git /tmp/ezlog
+  }
+  ezlog_path='/tmp/ezlog/src/main.sh'
+fi
+# shellcheck disable=SC1090
+source "${ezlog_path:-NOT_SET}"
 
 # _sanitize-pkg-name takes a package name (a URI or something like it) and
 # converts it into a canonical filesystem path
