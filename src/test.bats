@@ -22,7 +22,7 @@ source "./src/main.sh"
 }
 
 @test "_cache gets a package" {
-  want="${HOME}/.bashpack/lib/github.com/opensourcecorp/ezlog"
+  want="${BASHPACK_LIB}/github.com/opensourcecorp/ezlog"
   rm -rf "${want}"
   _cache 'https://github.com/opensourcecorp/ezlog'
   [[ -d "${want}" ]] || {
@@ -32,7 +32,7 @@ source "./src/main.sh"
 }
 
 @test "_cache knows about an existing package" {
-  want="${HOME}/.bashpack/lib/github.com/opensourcecorp/ezlog" # should exist from previous test
+  want="${BASHPACK_LIB}/github.com/opensourcecorp/ezlog" # should exist from previous test
   EZLOG_LEVEL=debug run _cache 'https://github.com/opensourcecorp/ezlog'
   [[ "${output}" =~ 'already cached' ]] || {
     printf '_cache thinks directory %s is not cached but it should be\n' "${want}"
@@ -43,7 +43,7 @@ source "./src/main.sh"
 }
 
 @test "_mainpath works for a bashpack package" {
-  want="${HOME}/.bashpack/lib/github.com/opensourcecorp/ezlog/src/main.sh" # should exist from a previous test
+  want="${BASHPACK_LIB}/github.com/opensourcecorp/ezlog/src/main.sh" # should exist from a previous test
   got="$(_mainpath https://github.com/opensourcecorp/ezlog)"
   [[ "${got}" == "${want}" ]] || {
     printf 'got == %s, want == %s\n' "${got}" "${want}"
@@ -52,7 +52,7 @@ source "./src/main.sh"
 }
 
 @test "_mainpath works (as well as it can) for a non-bashpack package" {
-  want="${HOME}/.bashpack/lib/github.com/opensourcecorp/osc-infra/baseimg/scripts/build/main.sh"
+  want="${BASHPACK_LIB}/github.com/opensourcecorp/osc-infra/baseimg/scripts/build/main.sh"
   got="$(_mainpath https://github.com/opensourcecorp/osc-infra)"
   [[ "${got}" == "${want}" ]] || {
     printf 'got == %s, want == %s\n' "${got}" "${want}"

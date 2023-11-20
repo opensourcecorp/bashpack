@@ -2,8 +2,15 @@
 set -euo pipefail
 
 # Root directory for the bashpack tree. Can be user-overridden.
-BASHPACK_ROOT="${BASHPACK_ROOT:-${HOME}/.bashpack}"
+BASHPACK_ROOT="${BASHPACK_ROOT:-}"
+if [[ "$(id -u)" -eq 0 ]] ; then
+  BASHPACK_ROOT="/usr/local/share/bashpack"
+else
+  BASHPACK_ROOT="${HOME}/.bashpack"
+fi
 BASHPACK_LIB="${BASHPACK_ROOT}/lib"
+export BASHPACK_ROOT
+export BASHPACK_LIB
 mkdir -p \
   "${BASHPACK_ROOT}" \
   "${BASHPACK_LIB}"
