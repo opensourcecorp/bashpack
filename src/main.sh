@@ -55,10 +55,6 @@ _cache() {
     log-info "Package '${pkg}' does not exist locally; retrieving" >&2
     git -C "${BASHPACK_LIB}" clone "${1}" "${pkg}" > /dev/null 2>&1 # clones to path based on the source path
     log-info "bashpack package '${pkg}' sucessfully cached at ${pkg_path}" >&2
-    # TODO: there seems to be a race condition SOMEWHERE between _cache
-    # finishing and _mainpath returning as the caller, so this `sleep` controls
-    # for that for now until I figure out wtf is going on on the filesystem
-    sleep 1
   else
     log-debug "bashpack package '${pkg}' was already cached at ${pkg_path}" >&2
   fi
