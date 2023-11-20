@@ -18,11 +18,9 @@ mkdir -p \
 # Set up ezlog, which is ironic considering bashpack can be used to get ezlog itself
 ezlog_path=''
 if [[ -d "${BASHPACK_LIB}/github.com/opensourcecorp/ezlog" ]] ; then
-  printf 'Using ezlog from bashpack cache\n'
   ezlog_path="${BASHPACK_LIB}/github.com/opensourcecorp/ezlog/src/main.sh"
 else
   [[ -d /tmp/ezlog ]] || {
-    printf 'Getting ezlog manually...\n'
     git clone --quiet --depth=1 https://github.com/opensourcecorp/ezlog.git /tmp/ezlog
   }
   ezlog_path='/tmp/ezlog/src/main.sh'
