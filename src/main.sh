@@ -58,6 +58,7 @@ _cache() {
   else
     log-debug "bashpack package '${pkg}' was already cached at ${pkg_path}" >&2
   fi
+  return 0
 }
 
 # _mainpath retrieves the host path to the backpack package's main file
@@ -73,15 +74,18 @@ _mainpath() {
   local mainfile=''
   if [[ -f "${pkg_path}/manifest.bashpack" ]] ; then
     log-debug "Found manifest.bashpack at '${pkg_path}/manifest.bashpack', will try to parse" >&2
+    local mainfile
     mainfile="${pkg_path}/$(awk -F'=' '/^main/ { gsub(/ /, "") ; print $2 }' "${pkg_path}"/manifest.bashpack)"
   else
     log-warn "No manifest.bashpack found at '${pkg_path}', will use the first 'main.sh' found" >&2
+    local mainfile
     mainfile="$(find "${pkg_path}" -type f -name main.sh | sort | head -n1)"
     log-warn "Found first main.sh to be '${mainfile}'" >&2
   fi
   log-debug "Using '${mainfile}' as mainfile" >&2
 
   printf '%s' "${mainfile}"
+  return 0
 }
 
 _main() {

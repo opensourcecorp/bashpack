@@ -4,6 +4,10 @@
 # to be called from repo root as `make test`
 source "./src/main.sh"
 
+teardown() {
+  rm -rf "${BASHPACK_LIB}"
+}
+
 @test "_sanitize-pkg-name works for various git protocol patterns" {
   for given_path in \
     'http://github.com/org/name' \
@@ -32,8 +36,9 @@ source "./src/main.sh"
 }
 
 @test "_cache knows about an existing package" {
-  want="${BASHPACK_LIB}/github.com/opensourcecorp/ezlog" # should exist from previous test
-  EZLOG_LEVEL=debug run _cache 'https://github.com/opensourcecorp/ezlog'
+  want="${BASHPACK_LIB}/github.com/opensourcecorp/ezlog"
+  EZLOG_LEVEL=debug _cache 'https://github.com/opensourcecorp/ezlog' # run first to cache
+  EZLOG_LEVEL=debug run _cache 'https://github.com/opensourcecorp/ezlog' # run again to get a cache hit
   [[ "${output}" =~ 'already cached' ]] || {
     printf '_cache thinks directory %s is not cached but it should be\n' "${want}"
     printf "\$output was:\n"
@@ -43,7 +48,7 @@ source "./src/main.sh"
 }
 
 @test "_mainpath works for a bashpack package" {
-  want="${BASHPACK_LIB}/github.com/opensourcecorp/ezlog/src/main.sh" # should exist from a previous test
+  want="${BASHPACK_LIB}/github.com/opensourcecorp/ezlog/src/main.sh"
   got="$(_mainpath https://github.com/opensourcecorp/ezlog)"
   [[ "${got}" == "${want}" ]] || {
     printf 'got == %s, want == %s\n' "${got}" "${want}"
