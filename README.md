@@ -14,8 +14,8 @@ You can use `bashpack` as a library manager for imports/`source`s:
 ```bash
 #!/usr/bin/env bash
 
-source "$(bashpack mainpath '<uri_to_pkg>')"
-source "$(bashpack mainpath '<uri_to_other_pkg>')"
+source "$(bashpack import '<uri_to_pkg>')"
+source "$(bashpack import '<uri_to_other_pkg>')"
 
 <... rest of your script ...>
 ```
@@ -24,7 +24,7 @@ For example, to use `ezlog`'s log functions:
 
 ```bash
 # Load the ezlog library
-source "$(bashpack mainpath 'https://github.com/opensourcecorp/ezlog')"
+source "$(bashpack import 'https://github.com/opensourcecorp/ezlog')"
 
 # Now you can use the logging functions from that package, like `log-info`
 log-info 'Starting backup job...'
